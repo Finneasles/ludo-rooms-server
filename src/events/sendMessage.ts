@@ -2,12 +2,12 @@ import { GameServerEvent, GameServerExec } from "types";
 
 const event: GameServerEvent = {
   parameter: "sendMessage",
-  description: "user sendMessage.",
+  description: "Send message to current room.",
   exec: (props: GameServerExec) => {
     console.log("sendMessage", props.socket.id, props.data);
-    props.socket
+    props.io
       .to(`${props.socket.userData.curRoom}`)
-      .emit("receiveMessage", props.data);
+      .emit("receiveMessage", { author: props.socket.id, content: props.data });
   },
 };
 
