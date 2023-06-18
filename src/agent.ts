@@ -4,24 +4,22 @@ import * as http from "http";
 import fs from "fs";
 import { GameUser } from "@/lib/classes";
 
+export let defaultZones = [{ id: 0 }, { id: 1 }];
+
+export let roomList: {
+  id: number;
+  options: { name: string };
+  players: any[];
+  zone: number;
+}[] = [];
+
 export let connectionNum = 0;
-export let roomHandler: {
-  rooms: {
-    id: number;
-    name: string;
-    players?: { name: string; id: string }[];
-  }[];
-  roomsNum: number;
-} = {
-  rooms: [],
-  roomsNum: 0,
+
+export const handleConNum = (n1: number) => {
+  connectionNum = n1;
 };
 
-export const handleConNum = (n1: number) =>{
-  connectionNum = n1;
-}
-
-const PORT = process.env.PORT || "4737";
+const PORT = process.env.PORT || "4689";
 NodeErrorListener();
 
 const server = http.createServer().listen(PORT, () =>
@@ -36,17 +34,25 @@ const eventsDir = "/events/";
 const eventsFiles = fs.readdirSync(__dirname + eventsDir);
 
 io.on("connection", (socket) => {
-  handleConNum(connectionNum+ 1)
+  handleConNum(connectionNum + 1);
   socket.userData = new GameUser(`Guest${connectionNum}`);
+
   console.log(socket.userData.name, { connected: true });
+  
   eventsFiles.forEach((file: string) => {
     import(`@/${eventsDir}` + file).then((module) => {
-      // console.log(`loaded ${module.default.parameter}`);
       socket.on(module.default.parameter, (data: any) => {
         module.default.exec({ io, socket, data });
       });
     });
   });
+
   socket.join(`${socket.userData.curRoom}`);
-  socket.emit("setRooms", roomHandler.rooms);
+  console.log(socket.userData.name, { subscribedTo: socket.userData.curRoom });
+
+  socket.emit("intData", {
+    curRoom: socket.userData.curRoom,
+    rooms: roomList,
+    connections: [{ id: 1 }, { id: 2 }],
+  });
 });
