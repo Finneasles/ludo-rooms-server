@@ -1,21 +1,38 @@
 import { Socket } from "socket.io";
+import { getRandomId } from "@/lib/funcs";
 
 export class GameUser {
   name: string;
   curRoom: number;
-  constructor(name: string) {
+  curZone: number;
+  
+  constructor(name: string, room: number = 0, zone: number = 0) {
     this.name = name;
-    this.curRoom = 0;
+    this.curRoom = room;
+    this.curZone = zone;
+  }
+}
+
+export class GameZone {
+  id: number;
+  roomNum: number;
+  rooms: GameRoom[];
+  constructor() {
+    this.id = getRandomId();
+    this.roomNum = 0;
+    this.rooms = [];
   }
 }
 
 export class GameRoom {
   id: number;
-  name: string;
-  players: { id: string; name: string }[];
-  constructor(socket: Socket, name: string) {
-    this.name = name;
-    this.players = [{ id: socket.id, name: socket.userData.name }];
-    this.id = parseInt(Math.random().toString().slice(2, 9));
+  options: { name : string };
+  players: any[];
+  zone: number;
+  constructor(options: { name : string}, zone?: number) {
+    this.options = { name : options.name};
+    this.id = getRandomId();
+    this.players = []
+    this.zone = zone || 0;
   }
 }
