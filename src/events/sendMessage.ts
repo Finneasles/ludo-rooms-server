@@ -1,13 +1,15 @@
-import { GameServerEvent, GameServerExec } from "types";
+import { GameServerEvent, GameServerExec } from "@/types";
 
 const event: GameServerEvent = {
   parameter: "sendMessage",
-  description: "Send message to current room.",
-  exec: (props: GameServerExec) => {
-    console.log("sendMessage", props.socket.id, props.data);
-    props.io
-      .to(`${props.socket.userData.curRoom}`)
-      .emit("receiveMessage", { author: props.socket.id, content: props.data });
+  description: "user sendMessage.",
+  exec: ({ io, socket, data }: GameServerExec) => {
+    console.log("sendMessage", socket.id, socket.userData.curRoom);
+    io.to(`${socket.userData.curRoom}`).emit("receiveMessage", {
+      author: { id: socket.id, name: socket.userData.name },
+      content: data,
+      date: new Date()
+    });
   },
 };
 
