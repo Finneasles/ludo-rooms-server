@@ -8,6 +8,7 @@ const event: GameServerEvent = {
   exec: ({ io, socket }: GameServerExec) => {
     handleConNum(connectionNum - 1);
     removePlayerFromRoom(io, socket, socket.userData.curRoom);
+    io.to("0").emit("setRooms", roomList);
   },
 };
 

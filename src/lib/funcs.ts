@@ -58,10 +58,6 @@ export function addPlayerToRoom(
   const roomIndex = roomList.findIndex((room) => room.id === roomId);
   if (roomIndex !== -1) {
     roomList[roomIndex].players.push({ id: socket.id });
-    resyncUserData({ socket, id: roomId });
-    socket.emit("gotoRoom", { id: roomId });
-    console.log(`${socket.userData.name} added to ${roomId}`);
-    io.to("0").emit("setRooms", roomList);
   } else {
     console.log(`Room with ID ${roomId} does not exist.`);
   }
@@ -84,7 +80,6 @@ export function removePlayerFromRoom(
         // Last player - remove room
         roomList.splice(roomIndex, 1);
       }
-      io.to("0").emit("setRooms", roomList);
     } else {
       console.log(
         `Player with ID ${socket.id} does not exist in Room ${roomId}.`
