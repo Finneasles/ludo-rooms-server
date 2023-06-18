@@ -1,4 +1,4 @@
-import { NodeErrorListener } from "@/lib/funcs";
+import { NodeErrorListener, getRandomId } from "@/lib/funcs";
 import { Server } from "socket.io";
 import * as http from "http";
 import fs from "fs";
@@ -35,7 +35,7 @@ const eventsFiles = fs.readdirSync(__dirname + eventsDir);
 
 io.on("connection", (socket) => {
   handleConNum(connectionNum + 1);
-  socket.userData = new GameUser(`Guest${connectionNum}`);
+  socket.userData = new GameUser(`Guest${getRandomId(4)}`);
 
   console.log(socket.userData.name, { connected: true });
   
