@@ -57,7 +57,33 @@ export function addPlayerToRoom(
 ): void {
   const roomIndex = roomList.findIndex((room) => room.id === roomId);
   if (roomIndex !== -1) {
-    roomList[roomIndex].players.push({ id: socket.id });
+    roomList[roomIndex].players.push({ id: socket.id, ready: false });
+  } else {
+    console.log(`Room with ID ${roomId} does not exist.`);
+  }
+}
+
+export function readyPlayerInRoom(
+  io: Server,
+  socket: Socket,
+  roomId: number
+): void {
+  const roomIndex = roomList.findIndex((room) => room.id === roomId);
+  if (roomIndex !== -1) {
+    const playerIndex = roomList[roomIndex].players.findIndex(
+      (player) => player.id === socket.id
+    );
+    if (playerIndex !== -1) {
+      const toggledState = !roomList[roomIndex].players[playerIndex].ready;
+      roomList[roomIndex].players[playerIndex].ready = toggledState;
+      console.log(
+        `${socket.userData.name} toggle ready:${toggledState} in ${roomId}`
+      );
+    } else {
+      console.log(
+        `Player with ID ${socket.id} does not exist in Room ${roomId}.`
+      );
+    }
   } else {
     console.log(`Room with ID ${roomId} does not exist.`);
   }
