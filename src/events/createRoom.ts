@@ -4,7 +4,6 @@ import { addPlayerToRoom, resyncUserData } from "@/lib/funcs";
 import { GameServerEvent, GameServerExec } from "@/types";
 
 const event: GameServerEvent = {
-  parameter: "createRoom",
   description: "user createRoom.",
   exec: ({ io, socket, data }: GameServerExec) => {
     const newRoom = new GameRoom(data, 0);

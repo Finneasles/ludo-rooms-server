@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
   
   eventsFiles.forEach((file: string) => {
     import(`@/${eventsDir}` + file).then((module) => {
-      socket.on(module.default.parameter, (data: any) => {
+      socket.on(file.split(".")[0], (data: any) => {
         module.default.exec({ io, socket, data });
       });
     });

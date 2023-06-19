@@ -1,7 +1,6 @@
 import { GameServerEvent, GameServerExec } from "@/types";
 
 const event: GameServerEvent = {
-  parameter: "sendMessage",
   description: "user sendMessage.",
   exec: ({ io, socket, data }: GameServerExec) => {
     console.log("sendMessage", socket.id, socket.userData.curRoom);
