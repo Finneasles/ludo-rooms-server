@@ -57,7 +57,11 @@ export function addPlayerToRoom(
 ): void {
   const roomIndex = roomList.findIndex((room) => room.id === roomId);
   if (roomIndex !== -1) {
-    roomList[roomIndex].players.push({ id: socket.id, ready: false });
+    roomList[roomIndex].players.push({
+      id: socket.id,
+      role: roomList[roomIndex].players.length < 1 ? 1 : 0,
+      ready: false,
+    });
   } else {
     console.log(`Room with ID ${roomId} does not exist.`);
   }
