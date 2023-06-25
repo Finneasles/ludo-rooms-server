@@ -36,8 +36,8 @@ const io = new Server(server, {
   cors: { origin: process.env.CORS_ORIGIN || "*" },
 });
 
-const eventsDir = "/events/";
-const eventsFiles = fs.readdirSync(__dirname + eventsDir);
+const rootEvents = process.cwd() + "/src/events";
+const eventsFiles = fs.readdirSync(rootEvents);
 
 io.on("connection", (socket) => {
   handleConNum(connectionNum + 1);
@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
   console.log(socket.userData.name, { connected: true });
 
   eventsFiles.forEach((file: string) => {
-    import(`@${eventsDir}` + file).then((module) => {
+    import(`${rootEvents}/${file}`).then((module) => {
       socket.on(file.split(".")[0], (data: any) => {
         module.default.exec({ io, socket, data });
       });
