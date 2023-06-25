@@ -19,7 +19,7 @@ export const handleConNum = (n1: number) => {
   connectionNum = n1;
 };
 
-const PORT = process.env.PORT || "4689";
+const PORT = process.env.SOCKET_PORT || 4689;
 NodeErrorListener();
 
 const server = http.createServer().listen(PORT, () =>
@@ -29,7 +29,10 @@ const server = http.createServer().listen(PORT, () =>
   })
 );
 
-const io = new Server(server, { cors: { origin: "*" } });
+const io = new Server(server, {
+  cors: { origin: process.env.CORS_ORIGIN || "*" },
+});
+
 const eventsDir = "/events/";
 const eventsFiles = fs.readdirSync(__dirname + eventsDir);
 
