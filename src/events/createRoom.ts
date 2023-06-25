@@ -10,8 +10,16 @@ const event: GameServerEvent = {
     roomList.push(newRoom);
     addPlayerToRoom(io, socket, newRoom.id);
     resyncUserData({ socket, id: newRoom.id });
-    socket.emit("gotoRoom", { id: newRoom.id });
-    console.log(`${socket.userData.name} added to ${newRoom.id}`);
+
+    const roomIndex = roomList.findIndex(
+      (room) => room.id === socket.userData.curRoom
+    );
+    const room = roomList[roomIndex];
+
+    if (!room) return;
+    socket.emit("gotoRoom", room);
+    console.log(`${socket.userData.name} added to ${room.id}`);
+    socket.emit("updateRoom", room);
     io.to("0").emit("setRooms", roomList);
   },
 };
