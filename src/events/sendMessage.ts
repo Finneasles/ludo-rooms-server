@@ -1,4 +1,4 @@
-import { GameServerEvent, GameServerExec } from "@/types";
+import { GameServerEvent, GameServerExec } from "types";
 
 const event: GameServerEvent = {
   description: "user sendMessage.",
