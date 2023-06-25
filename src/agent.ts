@@ -1,8 +1,8 @@
 import { NodeErrorListener, getRandomId } from "@/lib/funcs";
 import { Server } from "socket.io";
-import * as http from "http";
-import fs from "fs";
+import { createServer, IncomingMessage, ServerResponse } from "http";
 import { GameUser } from "@/lib/classes/gameUser";
+import fs from "fs";
 
 export let defaultZones = [{ id: 0 }, { id: 1 }];
 
@@ -22,7 +22,10 @@ export const handleConNum = (n1: number) => {
 const PORT = process.env.PORT || 4689;
 NodeErrorListener();
 
-const server = http.createServer().listen(PORT, () =>
+const server = createServer((req: IncomingMessage, res: ServerResponse) => {
+  res.writeHead(200);
+  res.end("Server running...");
+}).listen(PORT, () =>
   console.log({
     message: `Agent server is running on port: [${PORT}].`,
     type: "success",
