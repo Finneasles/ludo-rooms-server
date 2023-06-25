@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
   console.log(socket.userData.name, { connected: true });
 
   eventsFiles.forEach((file: string) => {
-    import(`@/${eventsDir}` + file).then((module) => {
+    import(`@${eventsDir}` + file).then((module) => {
       socket.on(file.split(".")[0], (data: any) => {
         module.default.exec({ io, socket, data });
       });
