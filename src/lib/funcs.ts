@@ -121,7 +121,7 @@ export function removePlayerFromRoom(
 }
 
 export const getRandomId = (length: number = 9): number => {
-  let min = Math.pow(10, length - 1);
-  let max = min * 10 - 1;
+  const min = Math.pow(10, length - 1);
+  const max = min * 10 - 1;
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };

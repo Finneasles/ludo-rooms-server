@@ -7,10 +7,10 @@ const event: GameServerEvent = {
   exec: ({ io, socket }: GameServerExec) => {
     handleConNum(connectionNum - 1);
     const roomIndex = roomList.findIndex((room) => room.id === socket.userData.curRoom);
-    const room = roomList[roomIndex];
-    if (!room) return;
+    const foundRoom = roomList[roomIndex];
+    if (!foundRoom) return;
     removePlayerFromRoom(io, socket, socket.userData.curRoom);
-    io.to(`${room.id}`).emit("updateRoom", room);
+    io.to(`${foundRoom.id}`).emit("updateRoom", foundRoom);
     io.to("0").emit("setRooms", roomList);
   },
 };
