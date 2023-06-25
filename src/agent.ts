@@ -19,7 +19,7 @@ export const handleConNum = (n1: number) => {
   connectionNum = n1;
 };
 
-const PORT = process.env.SOCKET_PORT || 4689;
+const PORT = process.env.PORT || 4689;
 NodeErrorListener();
 
 const server = http.createServer().listen(PORT, () =>
