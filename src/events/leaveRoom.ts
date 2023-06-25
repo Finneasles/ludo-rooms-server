@@ -8,12 +8,12 @@ const event: GameServerEvent = {
     const roomIndex = roomList.findIndex(
       (room) => room.id === socket.userData.curRoom
     );
-    const room = roomList[roomIndex];
-    if (!room) return;
-    removePlayerFromRoom(io, socket, room.id);
+    const foundRoom = roomList[roomIndex];
+    if (!foundRoom) return;
+    removePlayerFromRoom(io, socket, foundRoom.id);
     resyncUserData({ socket, id: 0 });
     socket.emit("gotoRoom", 0);
-    io.to(`${room.id}`).emit("updateRoom", room);
+    io.to(`${foundRoom.id}`).emit("updateRoom", foundRoom);
     io.to("0").emit("setRooms", roomList);
   },
 };

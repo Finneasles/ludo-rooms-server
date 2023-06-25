@@ -8,9 +8,9 @@ const event: GameServerEvent = {
     const roomIndex = roomList.findIndex(
       (room) => room.id === socket.userData.curRoom
     );
-    const room = roomList[roomIndex];
-    if (!room) return;
-    readyPlayerInRoom(io, socket, room.id);
+    const foundRoom = roomList[roomIndex];
+    if (!foundRoom) return;
+    readyPlayerInRoom(io, socket, foundRoom.id);
   },
 };
 

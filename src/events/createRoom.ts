@@ -1,5 +1,5 @@
 import { roomList } from "@/agent";
-import { GameRoom } from "@/lib/classes";
+import { GameRoom } from "@/lib/classes/gameRoom";
 import { addPlayerToRoom, resyncUserData } from "@/lib/funcs";
 import { GameServerEvent, GameServerExec } from "@/types";
 
@@ -14,12 +14,12 @@ const event: GameServerEvent = {
     const roomIndex = roomList.findIndex(
       (room) => room.id === socket.userData.curRoom
     );
-    const room = roomList[roomIndex];
+    const foundRoom = roomList[roomIndex];
 
-    if (!room) return;
-    socket.emit("gotoRoom", room);
-    console.log(`${socket.userData.name} added to ${room.id}`);
-    socket.emit("updateRoom", room);
+    if (!foundRoom) return;
+    socket.emit("gotoRoom", foundRoom);
+    console.log(`${socket.userData.name} added to ${foundRoom.id}`);
+    socket.emit("updateRoom", foundRoom);
     io.to("0").emit("setRooms", roomList);
   },
 };

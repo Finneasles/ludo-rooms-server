@@ -2,7 +2,7 @@ import { NodeErrorListener, getRandomId } from "@/lib/funcs";
 import { Server } from "socket.io";
 import * as http from "http";
 import fs from "fs";
-import { GameUser } from "@/lib/classes";
+import { GameUser } from "@/lib/classes/gameUser";
 
 export let defaultZones = [{ id: 0 }, { id: 1 }];
 
@@ -38,7 +38,7 @@ io.on("connection", (socket) => {
   socket.userData = new GameUser(`Guest${getRandomId(4)}`);
 
   console.log(socket.userData.name, { connected: true });
-  
+
   eventsFiles.forEach((file: string) => {
     import(`@/${eventsDir}` + file).then((module) => {
       socket.on(file.split(".")[0], (data: any) => {
