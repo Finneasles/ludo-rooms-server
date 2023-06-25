@@ -36,7 +36,7 @@ const io = new Server(server, {
   cors: { origin: process.env.CORS_ORIGIN || "*" },
 });
 
-const rootEvents = process.cwd() + "/src/events";
+const rootEvents = __dirname + "/events";
 const eventsFiles = fs.readdirSync(rootEvents);
 
 io.on("connection", (socket) => {
