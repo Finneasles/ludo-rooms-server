@@ -1,6 +1,6 @@
 import { connectionNum, handleConNum, roomList } from "@/agent";
 import { removePlayerFromRoom } from "@/lib/funcs";
-import { GameServerEvent, GameServerExec } from "@/types";
+import { GameServerEvent, GameServerExec } from "types";
 
 const event: GameServerEvent = {
   description: "user disconnect.",

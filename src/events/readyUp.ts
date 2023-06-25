@@ -1,6 +1,6 @@
 import { roomList } from "@/agent";
 import { readyPlayerInRoom } from "@/lib/funcs";
-import { GameServerEvent, GameServerExec } from "@/types";
+import { GameServerEvent, GameServerExec } from "types";
 
 const event: GameServerEvent = {
   description: "user readyUp in room.",

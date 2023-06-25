@@ -1,7 +1,8 @@
 {
   "require": ["tsconfig-paths/register"],
   "compilerOptions": {
-    "module": "commonjs",
+    "typeRoots": ["./types"],
+    "module": "esnext",
     "declaration": true,
     "esModuleInterop": true,
     "removeComments": true,
@@ -19,6 +20,7 @@
       "@/*": ["*"]
     }
   },
-  "include": ["src", "tests/**/*.ts"],
-  "exclude": ["node_modules", "build", ".vscode"]
+  "include": ["src", "types", "tests/**/*.ts"],
+  "exclude": ["node_modules", "build", ".vscode"],
+  "emitDeclarationOnly": true
 }

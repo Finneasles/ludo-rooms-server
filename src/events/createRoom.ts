@@ -1,7 +1,7 @@
 import { roomList } from "@/agent";
 import { GameRoom } from "@/lib/classes/gameRoom";
 import { addPlayerToRoom, resyncUserData } from "@/lib/funcs";
-import { GameServerEvent, GameServerExec } from "@/types";
+import { GameServerEvent, GameServerExec } from "types";
 
 const event: GameServerEvent = {
   description: "user createRoom.",
