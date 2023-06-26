@@ -3,6 +3,7 @@ import path from "path";
 import { Server, Socket } from "socket.io";
 import fs from "fs";
 import { IncomingMessage, ServerResponse } from "http";
+import { GameServerEvent, GameServerExec } from "@/types";
 
 export const NodeErrorListener = () => {
   process.on("unhandledRejection", (reason, promise) =>
@@ -128,3 +129,15 @@ export const getRandomId = (length: number = 9): number => {
   const max = min * 10 - 1;
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
+export function getServerEventType(): GameServerEvent {
+  return { exec: undefined };
+}
+
+export function getServerExecType(): GameServerExec {
+  return {};
+}
+
+export function getExternalModuleTypes() {
+  return { event: getServerEventType(), exec: getServerExecType() };
+}

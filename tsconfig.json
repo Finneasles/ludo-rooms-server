@@ -1,26 +1,37 @@
 {
   "require": ["tsconfig-paths/register"],
   "compilerOptions": {
-    "typeRoots": ["./types"],
-    "module": "esnext",
+    "typeRoots": ["src/typings"],
     "declaration": true,
     "esModuleInterop": true,
     "removeComments": true,
-    "target": "es6",
-    "strict": true,
-    "noImplicitAny": true,
     "moduleResolution": "node",
+    "lib": ["es2017"],
+    "strict": true,
+    "target": "es2021",
+    "module": "commonjs",
     "resolveJsonModule": true,
     "strictNullChecks": true,
     "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
     "sourceMap": true,
     "outDir": "build",
-    "baseUrl": "./src",
+    "baseUrl": ".",
+    "rootDir": "src",
     "paths": {
-      "@/*": ["*"]
-    }
+      "@/*": ["src/*"]
+    },
+    "isolatedModules": true
   },
-  "include": ["src", "types", "tests/**/*.ts"],
+  "include": [
+    "/src/**/*.ts",
+    "**/src/**/*.ts",
+    "**/__tests__/**/*.ts",
+    "/src/**/*.d.ts",
+    "tests/**/*.ts"
+  ],
   "exclude": ["node_modules", "build", ".vscode"],
-  "emitDeclarationOnly": true
+  "emitDeclarationOnly": true,
+  "extends": "@tsconfig/node16/tsconfig.json"
 }

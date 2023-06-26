@@ -3,6 +3,7 @@ import { Server } from "socket.io";
 import { createServer, IncomingMessage, ServerResponse } from "http";
 import { GameUser } from "@/lib/classes/gameUser";
 import fs from "fs";
+import path from "path";
 
 export let defaultZones = [{ id: 0 }, { id: 1 }];
 
@@ -45,8 +46,9 @@ io.on("connection", (socket) => {
 
   console.log(socket.userData.name, { connected: true });
 
-  eventsFiles.forEach((file: string) => {
-    import(`${rootEvents}/${file}`).then((module) => {
+  eventsFiles.forEach(async (file: string) => {
+    if (!file.endsWith(".js")) return;
+    await import(`${rootEvents}/${file}`).then((module) => {
       socket.on(file.split(".")[0], (data: any) => {
         module.default.exec({ io, socket, data });
       });
