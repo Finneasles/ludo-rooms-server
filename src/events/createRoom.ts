@@ -1,11 +1,19 @@
 import { roomList } from "@/agent";
 import { GameRoom } from "@/lib/classes/gameRoom";
-import { addPlayerToRoom, resyncUserData } from "@/lib/funcs";
-import { GameServerEvent, GameServerExec } from "types";
+import {
+  addPlayerToRoom,
+  getExternalModuleTypes,
+  getServerEventType,
+  getServerExecType,
+  resyncUserData,
+} from "@/lib/funcs";
 
-const event: GameServerEvent = {
+const { exec: ExecType , event: EventType} = getExternalModuleTypes()
+
+const event: typeof EventType = {
   description: "user createRoom.",
-  exec: ({ io, socket, data }: GameServerExec) => {
+  exec: ({ io, socket, data }: typeof ExecType) => {
+    if(!io || !socket) return
     const newRoom = new GameRoom(data, 0);
     roomList.push(newRoom);
     addPlayerToRoom(io, socket, newRoom.id);
