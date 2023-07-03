@@ -59,6 +59,7 @@ io.on("connection", (socket) => {
   console.log(socket.userData.name, { subscribedTo: socket.userData.curRoom });
 
   socket.emit("intData", {
+    userData: socket.userData,
     curRoom: socket.userData.curRoom,
     rooms: roomList,
     connections: [{ id: 1 }, { id: 2 }],

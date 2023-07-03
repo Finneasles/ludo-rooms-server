@@ -63,6 +63,7 @@ export function addPlayerToRoom(
   if (roomIndex !== -1) {
     roomList[roomIndex].players.push({
       id: socket.id,
+      name: socket.userData.name,
       role: roomList[roomIndex].players.length < 1 ? 1 : 0,
       ready: false,
     });
