@@ -1,10 +1,9 @@
 import { getExternalModuleTypes } from "@/lib/funcs";
+import { GameServerEvent, GameServerExec } from "@/types";
 
-const { exec: ExecType , event: EventType} = getExternalModuleTypes()
-
-const event: typeof EventType = {
+const event:GameServerEvent = {
   description: "user sendMessage.",
-  exec: ({ io, socket, data }: typeof ExecType) => {
+  exec: ({ io, socket, data }: GameServerExec) => {
     if(!io || !socket) return
     console.log("sendMessage", socket.id, socket.userData.curRoom);
     io.to(`${socket.userData.curRoom}`).emit("receiveMessage", {
