@@ -1,11 +1,11 @@
 import { roomList } from "@/agent";
-import { getExternalModuleTypes, removePlayerFromRoom, resyncUserData } from "@/lib/funcs";
+import { removePlayerFromRoom, resyncUserData } from "@/lib/funcs";
+import { GameServerEvent, GameServerExec } from "@/types";
 
-const { exec: ExecType , event: EventType} = getExternalModuleTypes()
 
-const event: typeof EventType = {
+const event: GameServerEvent = {
   description: "user leaveRoom.",
-  exec: ({ io, socket, data }: typeof ExecType) => {
+  exec: ({ io, socket, data }: GameServerExec) => {
     if(!io || !socket) return
     const roomIndex = roomList.findIndex(
       (room) => room.id === socket.userData.curRoom
