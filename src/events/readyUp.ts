@@ -12,6 +12,7 @@ const event: GameServerEvent = {
     const foundRoom = roomList[roomIndex];
     if (!foundRoom) return;
     readyPlayerInRoom(io, socket, foundRoom.id);
+    io.to(`${foundRoom.id}`).emit("updateRoom", foundRoom);
   },
 };
 
